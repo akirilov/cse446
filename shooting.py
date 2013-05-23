@@ -68,4 +68,5 @@ if __name__ == '__main__':
     testX = testX.T[1:].T
 
     result = shooting(testX, testY, math.e ** 11, 0.000001)
+    print result['weights']
     print result['w_0']
