@@ -5,7 +5,7 @@ soft = function(a, d)
 }
 
 # Define LASSO function
-lasso = function(lamda, X, Y)
+lasso = function(lambda, X, Y)
 {
   # Threshold of convergence
   epsilon = 1e-6
@@ -51,17 +51,26 @@ lasso = function(lamda, X, Y)
 
 # Read data from files
 setwd("~/Documents/Homework/cse446/proj")
-trainX = read.table("???")
-trainWords = read.table("???")
+# READ FILES - UNCOMMENT FOR FIRST READ, COMMENT OUT TO AVOID LOADING AGAIN WHEN VARIABLES IN MEMORY
+#trainX = read.table("data/mri_data_train.txt")
+#trainWords = read.table("data/wordid_train.txt")
 
-testX = read.table("???")
-featureDict = read.table("???")
+#testX = read.table("data/mri_data_test.txt")
+#testChoices = read.table("data/wordid_test.txt")
 
-# set trainY with featureDict replacing in trainWords
+#featureDict = read.table("data/wordfeature_centered.txt")
+
+trainY = trainWords
 
 result = lasso(exp(11), trainX, trainY)
 w_0 = result$one
 W = result$two
+
+# create testCorrect and testWrong matrices
+# then for each testX, get the smallest distance between correct
+# and wrong, and return 1 if wrong, 0 o.w.
+# finally sum the number of mistakes
+# and divide my number of test cases (60)
 
 print(W)
 print(w_0)

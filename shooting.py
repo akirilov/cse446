@@ -62,19 +62,20 @@ def shooting(X, Y, l, e):
     return result
 
 if __name__ == '__main__':
+    # Set up X matrix
     testX = np.matrix('')
-    testX.shape = (0, 91)
-    testdata = open('musicdata.txt')
-
-    # Read data from test file
-    for line in testdata:
+    testX.shape = (0, 21764)
+    testdataX = open('data/mri_data_train.txt')
+    for line in testdataX:
         testX = np.row_stack((testX, np.matrix(line)))
 
-    # Pull out Y data
-    testY = testX.T[0].T
+    # Set up Y matrix
+    testY = np.matrix('')
+    testY.shape = (0, 1)
+    testdataY = open('data/wordid_train.txt')
+    for line in testdataY:
+        testY = np.row_stack((testY, np.matrix(line)))
 
-    # Remove Y data from X matrix
-    testX = testX.T[1:].T
 
     result = shooting(testX, testY, math.e ** 11, 0.000001)
     print result['weights']
