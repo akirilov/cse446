@@ -4,8 +4,8 @@ import math
 import numpy as np
 from numpy import linalg as la
 
-# Return the sign of x, or 0 if x has no sign
 def sign(x):
+    """ Return the sign of x, or 0 if x has no sign """
     if x > 0:
         return 1
     elif x < 0:
@@ -13,20 +13,29 @@ def sign(x):
     else:
         return 0
 
-# The soft function as defined in class
 def soft(a, d):
+    """ The lasso coordinate descent soft function as defined in class """
     return sign(a) * max((abs(a) - d), 0)
 
-# Centers the data
 def center(x):
+    """ Return a centered copy of x (s.t. mean = 0) """
     col_mean = np.mean(x,0)
     for i in range(x.shape[0]):
         x[i] = x[i] - col_mean
     return x
 
-# Lasso shooting algorithm
-# X = data, Y = actual values, l = lambda, e = epsilon 
 def shooting(X, Y, l, e):
+    """ 
+    Return the weights vector and mean weight w_0 obtained through the lasso
+    shooting algorithm.
+    
+    Parameters:
+        X - data features matrix
+        Y - actual values vector
+        l - lambda
+        e - epsilon (error threshold)
+    
+    """
     nrow = X.shape[0]
     ncol = X.shape[1]
     Y_orig = np.matrix(Y)
@@ -68,4 +77,5 @@ if __name__ == '__main__':
     testX = testX.T[1:].T
 
     result = shooting(testX, testY, math.e ** 11, 0.000001)
+    print result['weights']
     print result['w_0']
