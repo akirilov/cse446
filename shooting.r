@@ -49,22 +49,28 @@ lasso = function(lambda, X, Y)
   return(result)
 }
 
+pca_reduce = function(X) {
+  covX = cov(X)
+}
+
 # Read data from files
 setwd("~/Documents/Homework/cse446/proj")
 # READ FILES - UNCOMMENT FOR FIRST READ, COMMENT OUT TO AVOID LOADING AGAIN WHEN VARIABLES IN MEMORY
-#trainX = read.table("data/mri_data_train.txt")
-#trainWords = read.table("data/wordid_train.txt")
+trainX = read.table("data/mri_data_train.txt")
+trainWords = read.table("data/wordid_train.txt")
 
-#testX = read.table("data/mri_data_test.txt")
-#testChoices = read.table("data/wordid_test.txt")
+testX = read.table("data/mri_data_test.txt")
+testChoices = read.table("data/wordid_test.txt")
 
-#featureDict = read.table("data/wordfeature_centered.txt")
+featureDict = read.table("data/wordfeature_centered.txt")
 
 trainY = trainWords
 
-result = lasso(exp(11), trainX, trainY)
-w_0 = result$one
-W = result$two
+# Reduce dimensionality
+
+#result = lasso(exp(11), trainX, trainY)
+#w_0 = result$one
+#W = result$two
 
 # create testCorrect and testWrong matrices
 # then for each testX, get the smallest distance between correct
