@@ -7,3 +7,7 @@ overfitting, but it could also jut be the fact that our stochastic coordinate
 descent chooses coordinates randomly. This might also suggest that the initial
 guesses for the weights are extremely accurate since even a single iteration
 can give the best accuracy seen - 11 misclassifications.
+
+The timing data clearly shows that there seems to be a base cost of about 83
+seconds to run the algorithm. Moreover, the graph (note the logarithmic x axis)
+suggests that the runtime scales linearly with iterations (this makes sense)
