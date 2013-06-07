@@ -11,3 +11,6 @@ However, various other amounts of reduction also resulted in better runtimes
 with a fewer errors. For example, using 25% of the data set resulted in a
 runtime that was almost 5 times faster and an error rate of 28.3%, only 10%
 worse than the best full-data error of 18.3%.
+
+Another interesting note is that changing the number of iterations seemed to
+have little to no positive effect when using dimensionality reduction.
