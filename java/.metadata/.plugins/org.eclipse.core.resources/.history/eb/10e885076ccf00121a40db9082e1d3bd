@@ -158,7 +158,7 @@ public class FMRIWordPrediction {
 			for (double lambda: lambdas) {
 				// System.out.println("Lambda: " + lambda);
 				Shooting S = new Shooting(Xtrain_trans, Ytrain_trans[i], lambda);
-				results.add(S.scd(10 * Xp));
+				results.add(S.scd(100 * Xp));
 			}
 			
 			// Pick the best lambda using the held out test set.
