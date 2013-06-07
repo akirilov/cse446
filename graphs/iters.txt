@@ -1,0 +1,9 @@
+The iterations had some very interesting results. It seems like the number of
+iterations was almost completely irrelevant - in fact even a single iteration
+could yield results as good as a few hunderd thousand iterations would.
+However, it seemed like low iterations had uniformly good results while a high
+number of iterations occasionally had more erros. This is possibly due to
+overfitting, but it could also jut be the fact that our stochastic coordinate
+descent chooses coordinates randomly. This might also suggest that the initial
+guesses for the weights are extremely accurate since even a single iteration
+can give the best accuracy seen - 11 misclassifications.

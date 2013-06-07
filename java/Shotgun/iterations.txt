@@ -1,0 +1,55 @@
+Iters: 0
+Number of mistakes: 32.0
+Classification error: 0.53333336
+
+Iters: 1
+Number of mistakes: 11.0
+Classification error: 0.18333334
+
+Iters: 0.001 * size
+Number of mistakes: 11.0
+Classification error: 0.18333334
+
+Iters: 0.01 * size
+Number of mistakes: 12.0
+Classification error: 0.2
+
+Iters: 0.1 * size
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Iters: 0.5 * size
+Number of mistakes: 12.0
+Classification error: 0.2
+
+Iters: 1 * size
+Number of mistakes: 11.0
+Classification error: 0.18333334
+
+Iters: 2 * size
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Iters: 4 * size
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Iters: 6 * size
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Iters: 8 * size
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Iters: 10 * size
+Number of mistakes: 12.0
+Classification error: 0.2
+
+Iters: 15 * size
+Number of mistakes: 11.0
+Classification error: 0.18333334
+
+Iters: 20 * size
+Number of mistakes: 12.0
+Classification error: 0.2

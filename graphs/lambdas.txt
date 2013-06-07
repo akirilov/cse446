@@ -1,0 +1,4 @@
+Because the lambda value is a weight with no real-world significance, there is
+not much that can be intuited or analyzed about. However, it's worth mentioning
+that we used LOOCVA to select the best lambda (which seemed to match up with
+the results from the series of tests on different lambda values).

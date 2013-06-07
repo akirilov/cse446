@@ -1,0 +1,39 @@
+Lambda: 0.01
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Lambda: 0.02
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Lambda: 0.03
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Lambda: 0.04
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Lambda: 0.05
+Number of mistakes: 13.0
+Classification error: 0.21666667
+
+Lambda: 0.10
+Number of mistakes: 15.0
+Classification error: 0.25
+
+Lambda: 0.15
+Number of mistakes: 16.0
+Classification error: 0.26666668
+
+Lambda: 0.20
+Number of mistakes: 22.0
+Classification error: 0.36666667
+
+Lambda: 0.25
+Number of mistakes: 27.0
+Classification error: 0.45
+
+Lambda: 0.30
+Number of mistakes: 31.0
+Classification error: 0.51666665

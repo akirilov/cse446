@@ -5,7 +5,7 @@ soft = function(a, d)
 }
 
 # Define LASSO function
-lasso = function(lambda, X, Y)
+shooting = function(lambda, X, Y)
 {
   # Threshold of convergence
   epsilon = 1e-6
@@ -24,8 +24,11 @@ lasso = function(lambda, X, Y)
   
   diff = 999999
   
-  while (diff > epsilon)
+  iters = 0
+  iterlim = 10 * ncol(X)
+  while (diff > epsilon && iters < iterlim)
   {
+    iters = iters + 1
     # Store last position
     W_last = W_cur
     
@@ -49,28 +52,46 @@ lasso = function(lambda, X, Y)
   return(result)
 }
 
-pca_reduce = function(X) {
-  covX = cov(X)
+nnzero = function(x) {
+  return(sum(x >= 0.01))
 }
 
 # Read data from files
 setwd("~/Documents/Homework/cse446/proj")
+
 # READ FILES - UNCOMMENT FOR FIRST READ, COMMENT OUT TO AVOID LOADING AGAIN WHEN VARIABLES IN MEMORY
-trainX = read.table("data/mri_data_train.txt")
-trainWords = read.table("data/wordid_train.txt")
+##### FILES #####
+# trainX = read.table("data/mri_data_train.txt")
+# trainY = read.table("data/wordid_train.txt")
+# trainY = trainY[,1]
+# 
+# testX = read.table("data/mri_data_test.txt")
+# testChoices = read.table("data/wordid_test.txt")
+# 
+# featureDict = read.table("data/wordfeature_centered.txt")
+##### END FILES #####
 
-testX = read.table("data/mri_data_test.txt")
-testChoices = read.table("data/wordid_test.txt")
-
-featureDict = read.table("data/wordfeature_centered.txt")
-
-trainY = trainWords
-
-# Reduce dimensionality
-
-#result = lasso(exp(11), trainX, trainY)
-#w_0 = result$one
-#W = result$two
+##### BEGIN PROCESSING #####
+trainXvars = apply(trainX, 2, var)
+colsToUse = sapply(trainXvars, function(x){x > 1.09})
+trainXfinal = matrix(nrow = 300, ncol = 0)
+for (i in seq(ncol(trainX))) {
+  if (colsToUse[i]) {
+    trainXfinal = cbind(trainXfinal, trainX[i])
+  }
+}
+##### END PROCESSING #####
+##### SHOOTING #####
+W = matrix(nrow=ncol(trainXfinal), ncol=218)
+w_0 = matrix(nrow=1, ncol=218)
+for (i in seq(218)) {
+  trainYtranslated = sapply(trainY, function(x){featureDict[x,i]})
+  result = shooting(0.05, trainXfinal, trainY)
+  w_0[i] = result$one
+  W[,i] = result$two
+}
+##### END SHOOTING #####
+estimates = as.matrix(trainXfinal) %*% W
 
 # create testCorrect and testWrong matrices
 # then for each testX, get the smallest distance between correct
@@ -78,5 +99,5 @@ trainY = trainWords
 # finally sum the number of mistakes
 # and divide my number of test cases (60)
 
-print(W)
-print(w_0)
+#print(W)
+#print(w_0)
