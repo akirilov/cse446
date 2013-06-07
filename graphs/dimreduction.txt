@@ -1,0 +1,13 @@
+The dimensionality reduction, as expected, results in faster runtimes but less
+accurate classifications. The baseline of allowing all data columns shows that
+the overhead of calculating variances and filtering columns is trivial. After
+that, various thresholds were tested for the variance (resulting in various
+numbers of columns being used). While the runtime benefits were very obvious,
+up to 70 times better with only 2% of the columns being used, such a high
+amount of reduction also resulting in high error, approaching the chance-odds
+of 0.5
+
+However, various other amounts of reduction also resulted in better runtimes
+with a fewer errors. For example, using 25% of the data set resulted in a
+runtime that was almost 5 times faster and an error rate of 28.3%, only 10%
+worse than the best full-data error of 18.3%.

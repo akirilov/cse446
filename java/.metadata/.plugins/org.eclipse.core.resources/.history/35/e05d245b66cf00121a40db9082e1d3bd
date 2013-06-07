@@ -93,42 +93,42 @@ public class FMRIWordPrediction {
 		// ############################
 		// # DIMENSIONALITY REDUCTION #
 		// ############################
-//		int Xp = Xpr;
-//		float[][] Xtrain_trans = Xtrain_transr;
-//		float[][] Xtest_trans = Xtest_transr;
-		float[] variances = new float[Xpr];
-		for (int d = 0; d < Xpr; d++) {
-			float[] dimension = Xtrain_transr[d];
-			
-			float sum = 0;
-			for (int i=0; i < ntrain; i++)
-				sum+=dimension[i];
-			float mean = sum / ntrain;
-			
-			float diffs = 0;
-			for (int i=0; i < ntrain; i++)
-				diffs+=Math.pow(dimension[i] - mean, 2);
-			variances[d] = diffs / ntrain;
-		}
-		double thresh = 1.07;
-		int count = 0;
-		for (int i = 0; i < Xpr; i++)
-			if (variances[i] > thresh) count++;
-		
-		float[][] Xtrain_trans = new float[count][ntrain];
-		float[][] Xtest_trans = new float[count][ntest];
-		int pos = 0;
-		for (int i = 0; i < Xpr; i++)
-		{
-			if (variances[i] > thresh) {
-				Xtrain_trans[pos] = Xtrain_transr[i];
-				Xtest_trans[pos] = Xtest_transr[i];
-				pos++;
-			}
-		}
-		
-		int Xp = Xtrain_trans.length;
-		System.out.println(Xp);
+		int Xp = Xpr;
+		float[][] Xtrain_trans = Xtrain_transr;
+		float[][] Xtest_trans = Xtest_transr;
+//		float[] variances = new float[Xpr];
+//		for (int d = 0; d < Xpr; d++) {
+//			float[] dimension = Xtrain_transr[d];
+//			
+//			float sum = 0;
+//			for (int i=0; i < ntrain; i++)
+//				sum+=dimension[i];
+//			float mean = sum / ntrain;
+//			
+//			float diffs = 0;
+//			for (int i=0; i < ntrain; i++)
+//				diffs+=Math.pow(dimension[i] - mean, 2);
+//			variances[d] = diffs / ntrain;
+//		}
+//		double thresh = 1.04;
+//		int count = 0;
+//		for (int i = 0; i < Xpr; i++)
+//			if (variances[i] > thresh) count++;
+//		
+//		float[][] Xtrain_trans = new float[count][ntrain];
+//		float[][] Xtest_trans = new float[count][ntest];
+//		int pos = 0;
+//		for (int i = 0; i < Xpr; i++)
+//		{
+//			if (variances[i] > thresh) {
+//				Xtrain_trans[pos] = Xtrain_transr[i];
+//				Xtest_trans[pos] = Xtest_transr[i];
+//				pos++;
+//			}
+//		}
+//		
+//		int Xp = Xtrain_trans.length;
+//		System.out.println(Xp);
 		
 		// ################################
 		// # END DIMENSIONALITY REDUCTION #
@@ -158,7 +158,7 @@ public class FMRIWordPrediction {
 			for (double lambda: lambdas) {
 				// System.out.println("Lambda: " + lambda);
 				Shooting S = new Shooting(Xtrain_trans, Ytrain_trans[i], lambda);
-				results.add(S.scd(20 * Xp));
+				results.add(S.scd(10 * Xp));
 			}
 			
 			// Pick the best lambda using the held out test set.
