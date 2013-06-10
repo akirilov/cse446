@@ -15,6 +15,10 @@ t_mistakes = c(11, 17, 17, 19, 18, 23, 23.0, 24.0)
 t_errors = c(0.18333334, 0.28333333, 0.28333333, 0.31666666, 0.3, 0.38333333, 0.38333333, 0.4)
 t_times = c(424.972, 126.229, 91.387, 62.743, 38.879, 23.723, 12.995, 5.665)
 
+p_dims = c(300)
+p_mistakes = c(23)
+p_errors = c(0.383333333333333)
+
 ##### LAMBDAS #####
 png("lambdas-mistakes.png", width=640, height=480)
 plot(lambdas, l_mistakes, xlab="Lambda value", ylab="Number of mistakes")

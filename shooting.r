@@ -20,7 +20,7 @@ shooting = function(lambda, X, Y)
   W_last = matrix(0, 90, 1)
   W_cur = solve(t(X) %*% X + lambda * diag(ncol(X))) %*% t(X) %*% Y
   X.temp = cbind(rep(1, dim(X)[1]), X)
-  w_0 = (solve(t(X.temp) %*% X.temp) %*% t(X.temp) %*% Y)[1]
+  w_0 = (solve(t(X.temp) %*% X.temp - diag(0.5, ncol(X.temp))) %*% t(X.temp) %*% Y)[1]
   
   diff = 999999
   
@@ -35,6 +35,10 @@ shooting = function(lambda, X, Y)
     # LASSO optimization magick
     d = ncol(X)
     n = nrow(X)
+    ### TEST FUNCTION
+    magicFun = function()
+    magicX = 
+    ### END TEST FUNCTION
     for (j in 1:d)
     {
       a_j = 2 * sum(X[,j]^2)
@@ -67,31 +71,64 @@ setwd("~/Documents/Homework/cse446/proj")
 # 
 # testX = read.table("data/mri_data_test.txt")
 # testChoices = read.table("data/wordid_test.txt")
+# testCorrect = as.matrix(testChoices[1])
+# testWrong = as.matrix(testChoices[2])
 # 
 # featureDict = read.table("data/wordfeature_centered.txt")
 ##### END FILES #####
 
 ##### BEGIN PROCESSING #####
-trainXvars = apply(trainX, 2, var)
-colsToUse = sapply(trainXvars, function(x){x > 1.09})
-trainXfinal = matrix(nrow = 300, ncol = 0)
-for (i in seq(ncol(trainX))) {
-  if (colsToUse[i]) {
-    trainXfinal = cbind(trainXfinal, trainX[i])
-  }
-}
+colsToUse = 1000
+trainXfinal = t(prcomp(trainX, scale = TRUE)$rotation)[,1:colsToUse]
+testXfinal = t(prcomp(testX, scale = TRUE)$rotation)[,1:colsToUse]
+##### BREAK #####
+# trainXvars = apply(trainX, 2, var)
+# colsToUse = sapply(trainXvars, function(x){x > 1.07})
+# trainXfinal = matrix(nrow = 300, ncol = 0)
+# testXfinal = matrix(nrow = 60, ncol = 0)
+# for (i in seq(ncol(trainX))) {
+#   if (colsToUse[i]) {
+#     trainXfinal = cbind(trainXfinal, trainX[i])
+#     testXfinal = cbind(testXfinal, testX[i])
+#   }
+# }
 ##### END PROCESSING #####
 ##### SHOOTING #####
 W = matrix(nrow=ncol(trainXfinal), ncol=218)
 w_0 = matrix(nrow=1, ncol=218)
+yhat = matrix(nrow=60, ncol=218)
 for (i in seq(218)) {
+  print("-----")
+  print(paste("Feature: ", i))
   trainYtranslated = sapply(trainY, function(x){featureDict[x,i]})
-  result = shooting(0.05, trainXfinal, trainY)
+  result = shooting(0.01, trainXfinal, trainYtranslated)
   w_0[i] = result$one
   W[,i] = result$two
+  
+  # Get errors
+  yhat[,i] = as.matrix(testXfinal) %*% (W[,i] + w_0[i])
+  mistake = 0;
+  for (j in seq(nrow(testCorrect))) {
+    yCorrect = testCorrect[j]
+    yWrong = testWrong[j]
+    dist1 = 0
+    dist2 = 0
+    for (ii in seq(i)) {
+      yCorrectTranslated = featureDict[yCorrect,ii]
+      yWrongTranslated = featureDict[yWrong,ii]
+      dist1 = dist1 + (yhat[j,ii] - yCorrectTranslated)^2
+      dist2 = dist2 + (yhat[j,ii] - yWrongTranslated)^2
+    }
+    if (dist1 > dist2) {
+      mistake = mistake + 1
+    } else if (dist1 == dist2) {
+      mistake = mistake + 0.5
+    }
+  }
+  print(paste("Mistakes: ", mistake))
+  print(paste("Error: ", mistake/60))
 }
 ##### END SHOOTING #####
-estimates = as.matrix(trainXfinal) %*% W
 
 # create testCorrect and testWrong matrices
 # then for each testX, get the smallest distance between correct

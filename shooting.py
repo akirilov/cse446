@@ -24,7 +24,7 @@ def center(x):
         x[i] = x[i] - col_mean
     return x
 
-def shooting(X, Y, l, e):
+def shooting(X, Y, l, e, niters):
     """ 
     Return the weights vector and mean weight w_0 obtained through the lasso
     shooting algorithm.
@@ -47,7 +47,9 @@ def shooting(X, Y, l, e):
     X_temp = np.column_stack((np.matrix('1;' * (nrow - 1) + '1'), X))
     w_0 = (la.inv(X_temp.T * X_temp) * X_temp.T * Y)[0]
     diff = e + 1
-    while diff > e:
+    iters = 0
+    while diff > e and iters < niters:
+        iters += 1
         W_last = np.matrix(W_cur)
         d = ncol
         n = nrow
@@ -63,20 +65,19 @@ def shooting(X, Y, l, e):
 
 if __name__ == '__main__':
     # Set up X matrix
-    testX = np.matrix('')
-    testX.shape = (0, 21764)
-    testdataX = open('data/mri_data_train.txt')
-    for line in testdataX:
-        testX = np.row_stack((testX, np.matrix(line)))
+    trainXr = np.matrix('')
+    trainXr.shape = (0, 21764)
+    traindataX = open('data/mri_data_train.txt')
+    for line in traindataX:
+        trainXr = np.row_stack((trainXr, np.matrix(line)))
 
     # Set up Y matrix
-    testY = np.matrix('')
-    testY.shape = (0, 1)
-    testdataY = open('data/wordid_train.txt')
-    for line in testdataY:
-        testY = np.row_stack((testY, np.matrix(line)))
-
-
-    result = shooting(testX, testY, math.e ** 11, 0.000001)
+    trainY = np.matrix('')
+    trainY.shape = (0, 1)
+    traindataY = open('data/wordid_train.txt')
+    for line in traindataY:
+        trainY = np.row_stack((trainY, np.matrix(line)))
+    
+    result = shooting(trainXr, trainY, 0.05, 0.000001, 40000)
     print result['weights']
     print result['w_0']
